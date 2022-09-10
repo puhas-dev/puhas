@@ -1,33 +1,26 @@
-import React from "react";
-import { StyleSheet, View, LogBox, StatusBar } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import Toast from "react-native-toast-message";
+import 'react-native-gesture-handler';
+import React from 'react';
+import SignInScreen from './screens/SignInScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import SignUpScreen from './screens/SignUpScreen';
+import ProductScreen from './screens/ProductScreen';
 
-//Redux
-import { Provider } from "react-redux";
-import store from "./Redux/store";
 
-//Context API
-import Auth from "./Context/store/Auth";
+const Stack = createStackNavigator();
 
-//Navigator
-import Main from "./Navigators/Main";
-//Screens
-import ProductContainer from "./Screens/Products/ProductContainer";
-import Header from "./Shared/Header";
-
-LogBox.ignoreAllLogs(true);
-
-export default function App() {
+const App = () => {
   return (
-    <Auth>
-      <Provider store={store}>
-        <NavigationContainer>
-          <StatusBar backgroundColor="red" barStyle="light-content" />
-          <Main />
-          <Toast ref={(ref) => Toast.setRef(ref)} />
-        </NavigationContainer>
-      </Provider>
-    </Auth>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{header: () => null}}>
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="ProductScreen" component={ProductScreen} />
+        
+        
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
+
+export default App;

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "410086633923",
+    "project_id": "puhas--signin",
+    "storage_bucket": "puhas--signin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410086633923:android:69f7972b529395edc48d76",
+        "android_client_info": {
+          "package_name": "com.PuhasFarms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410086633923-fvumu8tr598j75be5ehnv3cejkb9208v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-CCPx18ijq2E5oIV3L1dzys1IgIGa6-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410086633923-fvumu8tr598j75be5ehnv3cejkb9208v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,6 +11,11 @@ const categorySchema = mongoose.Schema({
     color: {
         type: String,
     },
+    farm:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Farms",
+        required:true
+    }
 });
 
 categorySchema.virtual("id").get(function () {

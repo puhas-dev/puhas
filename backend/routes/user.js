@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require('uuid');
 
 router.get(`/`, async (req, res) => {
     const userList = await User.find().select("-passwordHash");
@@ -25,33 +26,35 @@ router.get(`/:id`, async (req, res) => {
 });
 
 router.post(`/`, async (req, res) => {
-    let user = new User({
-        user_id: req.body.user_id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        username: req.body.username,
-        user_role: req.body.user_role,
-        created_at: req.body.created_at,
-        user_email: req.body.user_email,
-        user_contact: req.body.user_contact,
-        user_address: req.body.user_address,
-        user_city: req.body.user_city,
-        user_state: req.body.user_state,
-        user_zip: req.body.user_zip,
-        user_location: req.body.user_location,
-        user_country: req.body.user_country,
-        user_wallet_id: req.body.user_wallet_id,
-        user_reports_to: req.body.user_reports_to,
-        favorite_items: req.body.favorite_items,
-    });
-    user = await user.save();
-    if (!user) return res.status(404).send("the user cannot be created!");
+   
+    // let user = new User({
+    //     user_id: req.body.user.id,
+    //     first_name: req.body.first_name,
+    //     last_name: req.body.last_name,
+    //     username: req.body.username,
+    //     user_role: req.body.user_role,
+    //     created_at: req.body.created_at,
+    //     user_email: req.body.user_email,
+    //     user_contact: req.body.user_contact,
+    //     user_address: req.body.user_address,
+    //     user_city: req.body.user_city,
+    //     user_state: req.body.user_state,
+    //     user_zip: req.body.user_zip,
+    //     user_location: req.body.user_location,
+    //     user_country: req.body.user_country,
+    //     user_wallet_id: req.body.user_wallet_id,
+    //     user_reports_to: req.body.user_reports_to,
+    //     favorite_items: req.body.favorite_items,
+    // });
+    // user = await user.save();
+    // if (!user) return res.status(404).send("the user cannot be created!");
 
-    res.send(user);
+    // res.send(user);
 });
 
 router.post(`/login`, async (req, res) => {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ user_email: req.body.email });
+    console.log(user)
     if (!user) {
         return res.status(400).send("The user not found");
     }
@@ -66,32 +69,36 @@ router.post(`/login`, async (req, res) => {
             secret,
             { expiresIn: "1d" }
         );
-        res.status(200).send({ user: user.email, token: token });
+        res.status(200).send({ user: user.email, token: token,user });
     } else {
         res.status(400).send("The Password is wrong!");
     }
 });
 
 router.post(`/register`, async (req, res) => {
+    console.log(req.body)
+     let id = uuidv4()
+    console.log(id)
     let user = new User({
-        user_id: req.body.user_id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        user_id: id,
+        // first_name: req.body.first_name,
+        // last_name: req.body.last_name,
         username: req.body.username,
-        user_role: req.body.user_role,
+       
+        // user_role: req.body.user_role,
         created_at: req.body.created_at,
         user_email: req.body.user_email,
         user_contact: req.body.user_contact,
-        user_address: req.body.user_address,
-        user_city: req.body.user_city,
-        user_state: req.body.user_state,
-        user_zip: req.body.user_zip,
-        user_location: req.body.user_location,
-        user_country: req.body.user_country,
-        user_wallet_id: req.body.user_wallet_id,
-        user_reports_to: req.body.user_reports_to,
-        favorite_items: req.body.favorite_items,
-        passwordHash: bcrypt.hashSync(req.body.password, 10),
+        // user_address: req.body.user_address,
+        // user_city: req.body.user_city,
+        // user_state: req.body.user_state,
+        // user_zip: req.body.user_zip,
+        // user_location: req.body.user_location,
+        // user_country: req.body.user_country,
+        // user_wallet_id: req.body.user_wallet_id,
+        // user_reports_to: req.body.user_reports_to,
+        // favorite_items: req.body.favorite_items,
+        passwordHash: bcrypt.hashSync(req.body.user_password, 10),
     });
     user = await user.save();
     if (!user) return res.status(404).send("the user cannot be created!");

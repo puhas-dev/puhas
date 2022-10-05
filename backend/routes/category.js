@@ -1,4 +1,5 @@
 const { Category } = require("../models/category");
+const { Farm } = require("../models/farm");
 const express = require("express");
 const router = express.Router();
 
@@ -12,21 +13,39 @@ router.get(`/`, async (req, res) => {
 });
 
 router.get(`/:id`, async (req, res) => {
-    const category = await Category.findById(req.params.id);
+    console.log(req.params.id)
+    let category = await Category.find()
+    let FarmCategory=[]
+    category.map((a)=>{
+        console.log(a.farm)
+        if(a.farm==req.params.id){
+            FarmCategory.push(a)
+        }
+    })
+    console.log(FarmCategory)
 
     if (!category) {
         res.status(500).json({
             message: "The category with given ID was not found",
         });
     }
-    res.status(200).send(category);
+    res.status(200).send(FarmCategory);
 });
 
 router.post(`/`, async (req, res) => {
+    const  farm = await Farm.findById(req.body.farm)
+    if (!farm) {
+        res.status(400).json({
+            message: "Invalid Farm ",
+        });
+    }
+
+
     let category = new Category({
         name: req.body.name,
         icon: req.body.icon,
         color: req.body.color,
+        farm:req.body.farm
     });
     category = await category.save();
     if (!category)

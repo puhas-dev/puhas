@@ -24,13 +24,13 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     let farm = new Farm({
-        farm_id: req.body.farm_id,
+        
         farm_name: req.body.farm_name,
         farm_address: req.body.farm_address,
         farm_city: req.body.farm_city,
         farm_state: req.body.farm_state,
         farm_zip: req.body.farm_zip,
-        farm_location: req.body.farm_location,
+        // farm_location: req.body.farm_location,
         farm_country: req.body.farm_country,
         farm_phone: req.body.farm_phone,
         farm_email: req.body.farm_email,

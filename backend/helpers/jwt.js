@@ -9,16 +9,19 @@ function authJwt() {
         isRevoked: isRevokedCallback,
     }).unless({
         path: [
-            //   { url: `${api}/products`, method: ["GET", "OPTIONS"] },
-            { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
-            { url: /\/api\/v1\/products(.*)/, methods: ["GET", "OPTIONS"] },
-            { url: /\/api\/v1\/categories(.*)/, methods: ["GET", "OPTIONS"] },
-            {
-                url: /\/api\/v1\/orders(.*)/,
-                methods: ["GET", "OPTIONS", "POST"],
-            },
-            `${api}/users/login`,
-            `${api}/users/register`,
+              { url: `${api}/farm`, method: ["GET","POST", "OPTIONS"] },
+            //   { url: `${api}/category`, method: ["GET","POST", "OPTIONS"] },
+            // { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
+            { url: /\/api\/v1\/product(.*)/, methods: ["GET","POST", "OPTIONS"] },
+             { url: /\/api\/v1\/category(.*)/, methods: ["GET","POST", "OPTIONS"] },
+            //  { url: /\/api\/v1\/user(.*)/, methods: ["GET","POST", "OPTIONS"] },
+            // {
+            //     url: /\/api\/v1\/orders(.*)/,
+            //     methods: ["GET", "OPTIONS", "POST"],
+            // },
+            `${api}/user/login`,
+            `${api}/user/register`,
+            // {url:`${api}/users`, method: ["GET","POST", "OPTIONS"]},
         ],
     });
 }

@@ -44,26 +44,33 @@ router.get(`/`, async (request, response) => {
 });
 
 router.get(`/:id`, async (request, response) => {
-    if (!mongoose.isValidObjectId(request.params.id)) {
-        return response.status(400).send("Invalid product ID");
-    }
-    const product = await Product.findById(request.params.id).populate(
-        "category"
-    );
+    // if (!mongoose.isValidObjectId(request.params.id)) {
+    //     return response.status(400).send("Invalid product ID");
+    // }
+
+    const product = await Product.find()
+    console.log(product)
+    console.log(request.params.id)
+    let productCategory=[]
+    product.map((a)=>{
+        if(a.category_id==request.params.id){
+            productCategory.push(a)
+        }
+    })
     if (!product) {
         response.status(500).json({ success: false });
     }
-    response.send(product);
+    response.send(productCategory);
 });
 
-router.post(`/`, uploadOptions.single("image"), async (request, response) => {
-    const category = await Category.findById(request.body.category);
+router.post(`/`, async (request, response) => {
+    const category = await Category.findById(request.body.category_id);
     if (!category) return response.status(400).send("Invalid Category");
 
-    const file = request.file;
-    if (!file) return response.status(400).send("No Image in the request");
+    // const file = request.file;
+    // if (!file) return response.status(400).send("No Image in the request");
 
-    const fileName = request.file.filename;
+    // const fileName = request.file.filename;
     // const basePath = `${request.protocol}://${request.get(
     //   "host"
     // )}/public/uploads/`;
@@ -71,20 +78,23 @@ router.post(`/`, uploadOptions.single("image"), async (request, response) => {
     let product = new Product({
         product_id: request.body.product_id,
         product_name: request.body.product_name,
-        product_crop_id: request.body.product_crop_id,
-        product_type: request.body.product_type,
+        // product_crop_id: request.body.product_crop_id,
+        // product_type: request.body.product_type,
         product_price: request.body.product_price,
-        product_status: request.body.product_status,
-        product_farm_id: request.body.product_farm_id,
-        product_distrib_center: request.body.product_distrib_center,
+        // product_status: request.body.product_status,
+        // product_farm_id: request.body.product_farm_id,
+        category_id:request.body.category_id,
+        // product_distrib_center: request.body.product_distrib_center,
         isFeatured: request.body.isFeatured,
-        numReiews: request.body.numReiews,
+        // numReiews: request.body.numReiews,
         countInStock: request.body.countInStock,
-        brand: request.body.brand,
-        image: basePath + fileName,
-        description: request.body.description,
-        rating: request.body.rating,
-        category: request.body.category,
+        isAdded:request.body.isAdded,
+        product_Count:request.body.product_Count
+        // brand: request.body.brand,
+        // image: basePath + fileName,
+        // description: request.body.description,
+        // rating: request.body.rating,
+        // category: request.body.category,
     });
 
     product = await product.save();
